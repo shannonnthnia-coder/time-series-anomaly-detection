@@ -14,7 +14,7 @@ This project implements and compares multiple anomaly detection techniques:
 - **Detection Rate**: 97.1% (catches 66/68 anomalies)
 - **False Alarm Rate**: 2.2% (only 8 false positives)
 
-## 🗂️ Project Structure
+## Project Structure
 ```
 time-series-anomaly-detection/
 ├── data/                          # Data directory (not committed)
@@ -161,4 +161,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] LSTM Autoencoder
 - [ ] Ensemble methods
 - [ ] Real-time deployment
+
 
