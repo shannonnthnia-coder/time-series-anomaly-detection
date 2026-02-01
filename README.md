@@ -38,7 +38,7 @@ time-series-anomaly-detection/
 ### Installation
 1. **Clone the repository**
 ```
-git clone https://github.com/yourusername/time-series-anomaly-detection.git
+git clone https://github.com/shannonnthnia-coder/time-series-anomaly-detection.git
 cd time-series-anomaly-detection
 ```
 2. **Create virtual environment**
@@ -161,3 +161,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] LSTM Autoencoder
 - [ ] Ensemble methods
 - [ ] Real-time deployment
+
