@@ -6,26 +6,22 @@ A comprehensive study comparing statistical and machine learning approaches for 
 This project implements and compares multiple anomaly detection techniques:
 - **Statistical Baseline**: Z-score on STL residuals
 - **Machine Learning**: Isolation Forest with feature engineering
-- **Deep Learning**: LSTM Autoencoder (planned)
-
-### Key Results
-- **Isolation Forest F1-Score**: 0.93 (93% accuracy)
-- **Improvement over Z-score**: +116% in F1-score
-- **Detection Rate**: 97.1% (catches 66/68 anomalies)
-- **False Alarm Rate**: 2.2% (only 8 false positives)
+- **Deep Learning**: LSTM Autoencoder
+- **Real time Deployment** : COMING SOON !!
 
 ## Project Structure
 ```
 time-series-anomaly-detection/
-├── data/                          # Data directory (not committed)
-│   └── raw/A1Benchmark/          # Yahoo S5 dataset
+├── data/                          # Data directory
+│   └── README.md
 ├── notebook/                      # Jupyter notebooks (analysis pipeline)
 │   ├── 01_exploration.ipynb      # Data exploration & visualization
 │   ├── 02_preprocessing_stl.ipynb # STL decomposition & normalization
 │   ├── 03_zscore_baseline.ipynb  # Statistical baseline (Z-score)
 │   └── 04_isolation_forest.ipynb # Isolation Forest implementation
+|   └── 05_lstm.ipynb             # LSTM Autoencoder Implementation
 ├── report/                        # Project reports
-│   └── proposal.md               # Project proposal
+│   └── REPORT.md              
 ├── .gitignore                    # Git ignore rules
 ├── LICENSE                       # MIT License
 ├── README.md                     # This file
@@ -69,30 +65,30 @@ jupyter notebook
 2. `02_preprocessing_stl.ipynb` - Preprocess and decompose
 3. `03_zscore_baseline.ipynb` - Statistical baseline
 4. `04_isolation_forest.ipynb` - ML model training
-5. 
+5. `05_lstm.ipynb` - ML model training
 
 ## Results Summary
-
 ### Model Comparison
-
 | Model | Precision | Recall | F1-Score |
 |-------|-----------|--------|----------|
 | Z-Score (Residual) | 0.65 | 0.32 | 0.43 |
-| **Isolation Forest** | **0.89** | **0.97** | **0.93** |
+| Isolation Forest | 0.89 | 0.97 | 0.93 |
+| LSTM Autoencoder | 0.94 | 0.98 | 0.96 |
 
 ### Key Findings
-
 1. **Feature Engineering is Crucial**: Statistical features (rolling windows, lags) outperformed raw values
 2. **Temporal Context Matters**: Rolling min/max features were most important (SHAP analysis)
-3. **STL Decomposition Helps**: Residual component captures anomalies effectively
+3. **STL Decomposition Helps**: These residual features improved both Isolation Forest and LSTM reconstruction-based detection.
 4. **Isolation Forest > Z-Score**: 116% improvement in F1-score
+5. **LSTM Autoencoder excels at capturing Sequential Dependencies** : Unlike Isolation Forest, the LSTM model implicitly captured long-range temporal dependencies without requiring extensive manual feature engineering.
+6. **Model Strengths differ based on Temporal Complexity** : Isolation Forest performed exceptionally well on feature-engineered data and the LSTM Autoencoder showed advantages in scenarios where anomalies were defined by subtle temporal dynamics rather than point-wise deviations.
 
 ## Technologies Used
 
 - **Python 3.13**
 - **Data Processing**: pandas, numpy
 - **Time Series**: statsmodels (STL decomposition)
-- **Machine Learning**: scikit-learn (Isolation Forest)
+- **Machine Learning**: scikit-learn, TensorFlow / Keras
 - **Visualization**: matplotlib, seaborn
 - **Interpretability**: SHAP
 - **Notebooks**: Jupyter
@@ -115,16 +111,37 @@ jupyter notebook
 - Rolling statistics (mean, std, min, max) with windows [5, 10, 20]
 - Lag features [1, 2, 3, 5, 10]
 - Difference features
-### 3. Model Training
+### 3. Baseline Method (Z-Score)
+- Anomalies are flagged when: ∣z∣>𝜏 , where τ is a predefined threshold.
+- Even though its computationally efficient, it lacks adaptability to non-stationary patterns and complex temporal structures.
+### 4. Isolation Forest Model
+- Isolation Forest is used as an unsupervised tree-based anomaly detection method.
+- Operates on engineered features
+- No anomaly labels are used during training
+- Anomalies are detected based on isolation depth
+- Isolation Forest significantly outperforms the Z-score baseline This demonstrates its robustness to complex anomaly patterns.
+### 5. LSTM Autoencoder Model
+- LSTM Encoder compresses sequences into a latent representation
+- LSTM Decoder reconstructs the original input sequence
+- Reconstruction error is used as the anomaly score
+- Samples with reconstruction error exceeding a certain threshold are flagged as anomalies
+- This approach is good at detecting contextual and temporal anomalies that cannot be identified using static features alone.
+### 6. Model Training
 - Stratified train-test split (70/30)
-- Hyperparameter tuning via grid search
-- Evaluation on held-out test set
+- Hyperparameter tuning via grid search for Isolation Forest
+- Manual threshold selection for Z-score and LSTM reconstruction error.
+- Evaluation on test set
 ### 4. Evaluation
 - Precision, Recall, F1-Score
 - ROC AUC (0.990)
 - Confusion Matrix
+- Precision-Recall Curve
 - SHAP feature importance
-
+### 5. Model Comparison
+- Z-Score: Simple baseline, high false positives
+- Isolation Forest: Best balance of precision and recall
+- LSTM Autoencoder: Strong temporal awareness, effective for complex anomalies
+  
 ## Visualizations
 
 The project includes comprehensive visualizations:
@@ -142,24 +159,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Shannon Nathania**
 - GitHub: [@shannonnthnia-coder](https://github.com/shannonnthnia-coder)
-- LinkedIn: [---](---)
+- LinkedIn: www.linkedin.com/in/shannon-nathania-susilo-169857368 
 
 ## Acknowledgments
 - Yahoo Research for the S5 A1Benchmark dataset
 - Anthropic for Claude AI assistance
 - scikit-learn and statsmodels communities
 
-## References
-
-1. 
 ## Roadmap
 
 - [x] Data exploration
 - [x] STL decomposition
 - [x] Z-score baseline
 - [x] Isolation Forest implementation
-- [ ] LSTM Autoencoder
-- [ ] Ensemble methods
+- [X] LSTM Autoencoder
 - [ ] Real-time deployment
+
 
 
